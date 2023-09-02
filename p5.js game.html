@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <p>Current player : <span id="player"></span></p>
+      <table border="20">
+        <tr>
+          <td
+            id="k0"
+            style="width: 100px; height: 100px"
+            onclick="chose(0)"
+          ></td>
+          <td
+            id="k1"
+            style="width: 100px; height: 100px"
+            onclick="chose(1)"
+          ></td>
+          <td
+            id="k2"
+            style="width: 100px; height: 100px"
+            onclick="chose(2)"
+          ></td>
+        </tr>
+        <tr>
+          <td
+            id="k3"
+            style="width: 100px; height: 100px"
+            onclick="chose(3)"
+          ></td>
+          <td
+            id="k4"
+            style="width: 100px; height: 100px"
+            onclick="chose(4)"
+          ></td>
+          <td
+            id="k5"
+            style="width: 100px; height: 100px"
+            onclick="chose(5)"
+          ></td>
+        </tr>
+        <tr>
+          <td
+            id="k6"
+            style="width: 100px; height: 100px"
+            onclick="chose(6)"
+          ></td>
+          <td
+            id="k7"
+            style="width: 100px; height: 100px"
+            onclick="chose(7)"
+          ></td>
+          <td
+            id="k8"
+            style="width: 100px; height: 100px"
+            onclick="chose(8)"
+          ></td>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      var player = 0;
+      var player_name = ["X", "O"];
+      var boxes = ["", "", "", "", "", "", "", "", ""];
+      function chose(box) {
+        console.log("chose");
+        elem = document.getElementById("k" + box);
+        console.log("textContent " + elem.textContent);
+        if (elem.textContent != "") {
+          alert("already filled");
+          return;
+        }
+        if (player == 0) {
+          elem.textContent = "X";
+          player = 1;
+          boxes[box] = "X";
+        } else {
+          elem.textContent = "O";
+          player = 0;
+          boxes[box] = "O";
+        }
+        wins = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6],];
+        for (let i of wins) {
+          if (boxes[i[0]] == "X" && boxes[i[2]] == "X" && boxes[i[1]] == "X") {
+            alert("Player X win");
+          }
+          else if (boxes[i[0]] == "O" && boxes[i[2]] == "O" && boxes[i[1]] == "O") {
+            alert("Player o win");
+          }
+          else if (boxes.every(box => box !== "")){
+            alert('draw')
+            break;
+          }
+        }
+    
+        document.getElementById("player").textContent = player_name[player];
+      }
+      document.getElementById("player").textContent = player_name[player];
+    </script>
+  </body>
+</html>
