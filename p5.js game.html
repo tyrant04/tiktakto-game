@@ -25,6 +25,13 @@
         margin-top: 50px;
       }
 
+      #board {
+        max-width: 300px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       table {
         border-collapse: collapse;
         background-color: #c04e4e;
@@ -63,9 +70,11 @@
     </style>
   </head>
   <body>
-    <div>
+    <div id="container">
       <h1>Tic Tac Toe</h1>
       <h3>Current player: <span id="player"></span></h3>
+
+
       <div id="board">
         <table>
           <tr>
@@ -110,7 +119,15 @@
           </div>
           <div class="modal-body">
             <p id="winnerMessage"></p>
-            <!-- <source><img src="img/chibiHa.png" alt="chibiHa.p"> -->
+            <iframe
+              src="https://giphy.com/embed/26tOZ42Mg6pbTUPHW"
+              width="480"
+              height="320"
+              frameborder="0"
+              class="giphy-embed"
+              allowfullscreen
+            ></iframe>
+            <p><a href="https://giphy.com/gifs/26tOZ42Mg6pbTUPHW"></a></p>
           </div>
           <div class="modal-footer">
             <button
@@ -119,7 +136,22 @@
               data-dismiss="modal"
               onclick="resetGame()"
             >
-              Play Again
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-clockwise"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+                />
+                <path
+                  d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -142,14 +174,14 @@
         let avatar = document.createElement("img");
         avatar.style.width = "100px";
         if (player == 0) {
-          avatar.src = "img/chibiHa.png"; 
-          elem.innerHTML = ""; 
+          avatar.src = "img/chibiHa.png";
+          elem.innerHTML = "";
           elem.appendChild(avatar);
           player = 1;
           boxes[box] = "X";
         } else {
-          avatar.src = "img/chibiMa.png"; 
-          elem.innerHTML = ""; 
+          avatar.src = "img/chibiMa.png";
+          elem.innerHTML = "";
           elem.appendChild(avatar);
           player = 0;
           boxes[box] = "O";
@@ -171,7 +203,7 @@
         ];
         for (let i of wins) {
           if (boxes[i[0]] == "X" && boxes[i[2]] == "X" && boxes[i[1]] == "X") {
-            showWinModal("Hasirama Win" );
+            showWinModal("Hasirama Win");
             return;
           } else if (
             boxes[i[0]] == "O" &&
