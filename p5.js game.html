@@ -2,106 +2,209 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Tic Tac Toe</title>
+    <style>
+      body {
+        background-color: #ffffff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      #container {
+        margin-top: 50px;
+      }
+
+      table {
+        border-collapse: collapse;
+        background-color: #c04e4e;
+        margin: 0 auto;
+      }
+
+      td {
+        width: 100px;
+        height: 100px;
+        font-size: 30px;
+        color: #ffffff;
+        font-weight: bold;
+        border: 2px solid #bebebe;
+        cursor: pointer;
+      }
+
+      td:hover {
+        background-color: #e88282;
+      }
+
+      .btn {
+        padding: 10px 30px;
+        background: #c04e4e;
+        border: 0;
+        outline: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .btn:hover {
+        background-color: #e88282;
+      }
+    </style>
   </head>
   <body>
-    <div style="text-align: center">
-      <p>Current player : <span id="player"></span></p>
-      <center>
-        <table border="20">
-        <tr>
-          <td
-            id="k0"
-            style="width: 100px; height: 100px"
-            onclick="chose(0)"
-          ></td>
-          <td
-            id="k1"
-            style="width: 100px; height: 100px"
-            onclick="chose(1)"
-          ></td>
-          <td
-            id="k2"
-            style="width: 100px; height: 100px"
-            onclick="chose(2)"
-          ></td>
-        </tr>
-        <tr>
-          <td
-            id="k3"
-            style="width: 100px; height: 100px; align-items: center;" 
-            onclick="chose(3)"
-          ></td>
-          <td
-            id="k4"
-            style="width: 100px; height: 100px"
-            onclick="chose(4)"
-          ></td>
-          <td
-            id="k5"
-            style="width: 100px; height: 100px"
-            onclick="chose(5)"
-          ></td>
-        </tr>
-        <tr>
-          <td
-            id="k6"
-            style="width: 100px; height: 100px"
-            onclick="chose(6)"
-          ></td>
-          <td
-            id="k7"
-            style="width: 100px; height: 100px"
-            onclick="chose(7)"
-          ></td>
-          <td
-            id="k8"
-            style="width: 100px; height: 100px"
-            onclick="chose(8)"
-          ></td>
-        </tr>
-      </table>
-      </center>
+    <div>
+      <h1>Tic Tac Toe</h1>
+      <h3>Current player: <span id="player"></span></h3>
+      <div id="board">
+        <table>
+          <tr>
+            <td id="k0" onclick="chose(0)"></td>
+            <td id="k1" onclick="chose(1)"></td>
+            <td id="k2" onclick="chose(2)"></td>
+          </tr>
+          <tr>
+            <td id="k3" onclick="chose(3)"></td>
+            <td id="k4" onclick="chose(4)"></td>
+            <td id="k5" onclick="chose(5)"></td>
+          </tr>
+          <tr>
+            <td id="k6" onclick="chose(6)"></td>
+            <td id="k7" onclick="chose(7)"></td>
+            <td id="k8" onclick="chose(8)"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal for Win and Draw -->
+    <div
+      class="modal fade"
+      id="winModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="winModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="winnerMessage"></p>
+            <!-- <source><img src="img/chibiHa.png" alt="chibiHa.p"> -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              onclick="resetGame()"
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
       var player = 0;
       var player_name = ["X", "O"];
       var boxes = ["", "", "", "", "", "", "", "", ""];
+
       function chose(box) {
         console.log("chose");
         elem = document.getElementById("k" + box);
         console.log("textContent " + elem.textContent);
         if (elem.textContent != "") {
-          alert("already filled");
+          alert("Already filled");
           return;
         }
+        let avatar = document.createElement("img");
+        avatar.style.width = "100px";
         if (player == 0) {
-          elem.textContent = "X";
+          avatar.src = "img/chibiHa.png"; 
+          elem.innerHTML = ""; 
+          elem.appendChild(avatar);
           player = 1;
           boxes[box] = "X";
         } else {
-          elem.textContent = "O";
+          avatar.src = "img/chibiMa.png"; 
+          elem.innerHTML = ""; 
+          elem.appendChild(avatar);
           player = 0;
           boxes[box] = "O";
         }
-        wins = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6],];
-        for (let i of wins) {
-          if (boxes[i[0]] == "X" && boxes[i[2]] == "X" && boxes[i[1]] == "X") {
-            alert("Player X win");
-          }
-          else if (boxes[i[0]] == "O" && boxes[i[2]] == "O" && boxes[i[1]] == "O") {
-            alert("Player o win");
-          }
-          else if (boxes.every(box => box !== "")){
-            alert('draw')
-            break;
-          }
-        }
-    
+        checkWin();
         document.getElementById("player").textContent = player_name[player];
       }
+
+      function checkWin() {
+        wins = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+        for (let i of wins) {
+          if (boxes[i[0]] == "X" && boxes[i[2]] == "X" && boxes[i[1]] == "X") {
+            showWinModal("Hasirama Win" );
+            return;
+          } else if (
+            boxes[i[0]] == "O" &&
+            boxes[i[2]] == "O" &&
+            boxes[i[1]] == "O"
+          ) {
+            showWinModal("Madara Win");
+            return;
+          }
+        }
+        if (boxes.every((box) => box !== "")) {
+          showWinModal("It's a draw!");
+        }
+      }
+
+      function showWinModal(message) {
+        document.getElementById("winnerMessage").textContent = message;
+        $("#winModal").modal("show");
+      }
+
+      function resetGame() {
+        player = 0;
+        boxes = ["", "", "", "", "", "", "", "", ""];
+        for (let i = 0; i < 9; i++) {
+          document.getElementById("k" + i).textContent = "";
+        }
+        document.getElementById("player").textContent = player_name[player];
+      }
+
+      function formReset() {
+        resetGame();
+      }
+
       document.getElementById("player").textContent = player_name[player];
     </script>
   </body>
